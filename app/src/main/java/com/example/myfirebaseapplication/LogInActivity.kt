@@ -1,9 +1,16 @@
 package com.example.myfirebaseapplication
 
+import android.app.AlertDialog
+import android.app.Dialog
+import android.app.ProgressDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
+import android.text.InputType
 import android.util.Log
 import android.view.View
+import android.widget.EditText
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.myfirebaseapplication.Utility.showToast
@@ -29,7 +36,7 @@ import com.google.firebase.ktx.Firebase
 class LogInActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLogInBinding
-
+private var progessBar:Dialog?=null
 
     private val TAG = "GoogleActivity"
     private val RC_SIGN_IN = 9001
@@ -70,6 +77,9 @@ class LogInActivity : AppCompatActivity() {
         binding.signInButton.setOnClickListener { view: View? ->
           //  Toast.makeText(this, "Logging In", Toast.LENGTH_SHORT).show()
             signInGoogle()
+        }
+        binding.tvForgotPassword.setOnClickListener { view: View? ->
+            showRecoverPasswordDialog()
         }
 
         binding.tvRedirectLogin.setOnClickListener {
@@ -156,6 +166,56 @@ class LogInActivity : AppCompatActivity() {
         if (currentUser!=null){
             val intent= Intent(this,MainActivity::class.java)
             startActivity(intent)
+        }
+    }
+
+    private fun showRecoverPasswordDialog() {
+
+
+        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+        builder.setTitle("Recover Password")
+        val linearLayout = LinearLayout(this)
+        val emailet = EditText(this)
+
+        // write the email using which you registered
+        emailet.setText("Email")
+        emailet.minEms = 16
+        emailet.inputType = InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
+        linearLayout.addView(emailet)
+        linearLayout.setPadding(10, 10, 10, 10)
+        builder.setView(linearLayout)
+
+        // Click on Recover and a email will be sent to your registered email id
+        builder.setPositiveButton("Send",
+            DialogInterface.OnClickListener { dialog, which ->
+                val email = emailet.text.toString().trim { it <= ' ' }
+                beginRecovery(email)
+            })
+        builder.setNegativeButton("Cancel",
+            DialogInterface.OnClickListener { dialog, which -> dialog.dismiss() })
+        builder.create().show()
+    }
+    private fun beginRecovery(email: String) {
+        progessBar = Dialog(this)
+
+        progessBar!!.setCanceledOnTouchOutside(false)
+        progessBar!!.show()
+
+        // calling sendPasswordResetEmail
+        // open your email and write the new
+        // password and then you can login
+        mAuth!!.sendPasswordResetEmail(email).addOnCompleteListener { task ->
+            progessBar!!.dismiss()
+            if (task.isSuccessful) {
+                // if isSuccessful then done message will be shown
+                // and you can change the password
+                Toast.makeText(this, "Done sent", Toast.LENGTH_LONG).show()
+            } else {
+                Toast.makeText(this, "Error Occurred", Toast.LENGTH_LONG).show()
+            }
+        }.addOnFailureListener {
+            progessBar!!.dismiss()
+            Toast.makeText(this, "Error Failed", Toast.LENGTH_LONG).show()
         }
     }
 }
