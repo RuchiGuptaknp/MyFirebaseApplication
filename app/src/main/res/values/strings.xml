@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">My Firebase Application</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
+    <string name="title_activity_log_in">LogInActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="password">Password</string>
+    <string name="name">Email</string>
+    <string name="loginactivity">LogInActivity</string>
+    <string name="submit">Submit</string>
+    <string name="btn_SinIn">SignIn</string>
+    <string name="btn_login">LogIn</string>
+    <string name="already_have_an_account_login">Already Have an Account</string>
+    <string name="do_not_have">Do not Have an Account</string>
+    <string name="signuoactivity">SignUoActivity</string>
+
+</resources>
