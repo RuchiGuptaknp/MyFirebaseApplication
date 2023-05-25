@@ -1,6 +1,6 @@
 package com.example.myfirebaseapplication.ui.home
 
-import android.app.Activity
+
 import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
@@ -16,16 +16,16 @@ import androidx.core.content.ContextCompat
 
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
-import androidx.navigation.fragment.findNavController
+
 import com.example.myfirebaseapplication.MainActivity
+import com.example.myfirebaseapplication.R
 
 import com.example.myfirebaseapplication.Utility.Constant
-import com.example.myfirebaseapplication.Utility.showToast
+
 
 import com.example.myfirebaseapplication.databinding.FragmentHomeBinding
 import com.example.myfirebaseapplication.model.Questions
 
-import com.google.firebase.database.*
 
 
 class HomeFragment : Fragment(),View.OnClickListener {
@@ -70,10 +70,10 @@ class HomeFragment : Fragment(),View.OnClickListener {
         questions = questionList!![currentPosition - 1]
         defaultOptionView()
         if (currentPosition==questionList!!.size){
-            binding.textHome.text="FINISH"
+            binding.textHome.text=getString(R.string.tv_finish)
 
         }else{
-            binding.textHome.text="SUBMIT"
+            binding.textHome.text=getString(R.string.tv_submit)
         }
         binding.progressBar.progress = currentPosition
         binding.tvProgress.text = "$currentPosition" + "/" + questionList!!.size.toString()
@@ -95,7 +95,7 @@ class HomeFragment : Fragment(),View.OnClickListener {
             option.typeface = Typeface.DEFAULT
             option.background = getDrawable(
                 requireActivity(),
-                com.example.myfirebaseapplication.R.drawable.btn_shape
+               R.drawable.btn_shape
             )
         }
 
@@ -109,7 +109,7 @@ class HomeFragment : Fragment(),View.OnClickListener {
         textView.typeface = Typeface.DEFAULT_BOLD
         textView.background = getDrawable(
             requireActivity(),
-            com.example.myfirebaseapplication.R.drawable.bg_selector_text
+            R.drawable.bg_selector_text
         )
 
 
@@ -140,19 +140,19 @@ class HomeFragment : Fragment(),View.OnClickListener {
 
     override fun onClick(p0: View?) {
         when (p0!!.id) {
-            com.example.myfirebaseapplication.R.id.tvOption -> {
+          R.id.tvOption -> {
                 selectedOptionView(binding.tvOption, 1)
             }
-            com.example.myfirebaseapplication.R.id.tvOption2 -> {
+         R.id.tvOption2 -> {
                 selectedOptionView(binding.tvOption2, 2)
             }
-            com.example.myfirebaseapplication.R.id.tvOption3 -> {
+           R.id.tvOption3 -> {
                 selectedOptionView(binding.tvOption3, 3)
             }
-            com.example.myfirebaseapplication.R.id.tvOption4 -> {
+         R.id.tvOption4 -> {
                 selectedOptionView(binding.tvOption4, 4)
             }
-            com.example.myfirebaseapplication.R.id.textHome -> {
+           R.id.textHome -> {
                 if (selectedOptionPosition == 0) {
                     currentPosition++
 
@@ -166,7 +166,7 @@ class HomeFragment : Fragment(),View.OnClickListener {
                             bundle.putString(Constant.USER_NAME,(activity as MainActivity).userName)
                             bundle.putString(Constant.TOTAL_QUESTION,questionList!!.size.toString())
                             bundle.putString(Constant.CORRECT_ANSWER,mCorrectCount.toString())
-                            Navigation.findNavController(binding.root).navigate(com.example.myfirebaseapplication.R.id.nav_home_to_result,bundle)
+                            Navigation.findNavController(binding.root).navigate(R.id.nav_home_to_result,bundle)
 
                            // (activity as MainActivity).showToast("You have successfully completed quiz")
                         }
@@ -178,20 +178,20 @@ class HomeFragment : Fragment(),View.OnClickListener {
                     if (question.correctAnswer != selectedOptionPosition) {
                         answerView(
                            selectedOptionPosition,
-                            com.example.myfirebaseapplication.R.drawable.wrong_bg
+                          R.drawable.wrong_bg
                         )
                     }else{
                         mCorrectCount++
                     }
                     answerView(
                         question.correctAnswer,
-                        com.example.myfirebaseapplication.R.drawable.correct_answer_bg
+                      R.drawable.correct_answer_bg
                     )
                     if (currentPosition==questionList!!.size){
-                        binding.textHome.text="FINISH"
+                        binding.textHome.text=getString(R.string.tv_finish)
 
                     }else{
-                        binding.textHome.text="GO TO NEXT PAGE"
+                        binding.textHome.text=getString(R.string.tv_go_to_next)
                     }
                     selectedOptionPosition=0
                 }

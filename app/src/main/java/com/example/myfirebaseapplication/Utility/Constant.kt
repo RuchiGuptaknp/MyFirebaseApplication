@@ -111,9 +111,6 @@ object Constant {
         questionList.add(question20)
 
 
-
-
-
         val question21=Questions(21,
             " What is breakpoint in android?","Breaks the application",
             "Breaks the development code","Breaks the execution.","None of the above.",3)
@@ -156,10 +153,37 @@ object Constant {
             "Dan Bornstein","Dennis Ritachie"," Linus Torvald","None",1)
         questionList.add(question29)
 
-        val question30=Questions(30," \n" +
+        val question30=Questions(30,
                 "Choose the correct option to find the JSON element length in Android JSON?",
             "sum()","add()"," length()","count()",3)
         questionList.add(question30)
+
+
+        val question31=Questions(31,
+            " Which of the following method is used by services to clean up any services?","stopSelf() method",
+            "onStop() method","stopService() method"," onDestroy() method",4)
+        questionList.add(question31)
+
+        val question32=Questions(32,"  Which of the following class in android executes the task asynchronously with your service?",
+            "Async"," SyncTask"," AsyncTask","All of them",3)
+        questionList.add(question32)
+
+
+        val question33=Questions(33,"Which of the following layout in android arranges its children into rows and columns?","RelativeLayout",
+            "TableLayout"," FrameLayout","None of the above",2)
+        questionList.add(question33)
+
+        val question34=Questions(34,
+            " Which of the following layout in android aligns all children either vertically or horizontally?","RelativeLayout",
+            "TableLayout","LinearLayout"," FrameLayout",3)
+        questionList.add(question34)
+
+        val question35=Questions(35,"What is the default value of the orientation attribute in LinearLayout?",
+            "Horizontal","Vertical","There is no default value of orientation attribute in LinearLayout","None",1)
+        questionList.add(question35)
+
+             questionList.add(question30)
+
 
         return questionList
 

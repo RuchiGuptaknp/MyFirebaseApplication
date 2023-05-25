@@ -34,5 +34,8 @@
     <string name="username">UserName</string>
     <string name="your_score_is_9_out_of_10">Your Score is 9 out of 10</string>
     <string name="finish">Finish</string>
+    <string name="tv_submit">SUBMIT</string>
+    <string name="tv_finish">FINISH</string>
+    <string name="tv_go_to_next">GO TO NEXT PAGE</string>
 
 </resources>
