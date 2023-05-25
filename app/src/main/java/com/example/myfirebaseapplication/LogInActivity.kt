@@ -13,6 +13,7 @@ import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.myfirebaseapplication.Utility.Constant
 import com.example.myfirebaseapplication.Utility.showToast
 import com.example.myfirebaseapplication.databinding.ActivityLogInBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -165,6 +166,7 @@ private var progessBar:Dialog?=null
         val currentUser=auth.currentUser
         if (currentUser!=null){
             val intent= Intent(this,MainActivity::class.java)
+            intent.putExtra(Constant.USER_NAME,binding.editText.text.toString())
             startActivity(intent)
         }
     }

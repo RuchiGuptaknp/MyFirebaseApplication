@@ -1,70 +1,136 @@
 package com.example.myfirebaseapplication.ui.home
 
-import android.content.Intent
+import android.app.Activity
+import android.graphics.Color
+import android.graphics.Typeface
 import android.os.Bundle
+import android.util.Log
+
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
-import com.example.myfirebaseapplication.LogInActivity
-import com.example.myfirebaseapplication.R
-import com.example.myfirebaseapplication.databinding.FragmentHomeBinding
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.firebase.auth.FirebaseAuth
 
-class HomeFragment : Fragment() {
+import androidx.appcompat.content.res.AppCompatResources.getDrawable
+import androidx.core.content.ContextCompat
+
+import androidx.fragment.app.Fragment
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
+import com.example.myfirebaseapplication.MainActivity
+
+import com.example.myfirebaseapplication.Utility.Constant
+import com.example.myfirebaseapplication.Utility.showToast
+
+import com.example.myfirebaseapplication.databinding.FragmentHomeBinding
+import com.example.myfirebaseapplication.model.Questions
+
+import com.google.firebase.database.*
+
+
+class HomeFragment : Fragment(),View.OnClickListener {
+    private var mCorrectCount = 0
+    private var currentPosition = 1
+    private var selectedOptionPosition = 0
+    private lateinit var questions: Questions
+    private var questionList: ArrayList<Questions>? = null
+
 
     private var _binding: FragmentHomeBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
-    // declare the GoogleSignInClient
-    lateinit var mGoogleSignInClient: GoogleSignInClient
 
-    private val auth by lazy {
-        FirebaseAuth.getInstance()
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val homeViewModel =
-            ViewModelProvider(this).get(HomeViewModel::class.java)
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
+        initView()
 
-        val textView: TextView = binding.textHome
-        homeViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
+        return root
+    }
+
+    private fun initView() {
+        setQuestionList()
+        binding.tvOption.setOnClickListener(this)
+        binding.tvOption2.setOnClickListener(this)
+        binding.tvOption3.setOnClickListener(this)
+        binding.tvOption4.setOnClickListener(this)
+        binding.textHome.setOnClickListener(this)
+
+    }
+
+    private fun setQuestionList() {
+        questionList = Constant.getQuestionList()
+        Log.d("questionList", questionList!!.size.toString())
+
+        questions = questionList!![currentPosition - 1]
+        defaultOptionView()
+        if (currentPosition==questionList!!.size){
+            binding.textHome.text="FINISH"
+
+        }else{
+            binding.textHome.text="SUBMIT"
+        }
+        binding.progressBar.progress = currentPosition
+        binding.tvProgress.text = "$currentPosition" + "/" + questionList!!.size.toString()
+        binding.textUpdate.text = questions.questions
+        binding.tvOption.text = questions.option1
+        binding.tvOption2.text = questions.option2
+        binding.tvOption3.text = questions.option3
+        binding.tvOption4.text = questions.option4
+    }
+
+    private fun defaultOptionView() {
+        val options = ArrayList<TextView>()
+        options.add(0, binding.tvOption)
+        options.add(1, binding.tvOption2)
+        options.add(2, binding.tvOption3)
+        options.add(3, binding.tvOption4)
+        for (option in options) {
+            option.setTextColor(Color.parseColor("#7A8089"))
+            option.typeface = Typeface.DEFAULT
+            option.background = getDrawable(
+                requireActivity(),
+                com.example.myfirebaseapplication.R.drawable.btn_shape
+            )
         }
 
 
+    }
 
-        // call requestIdToken as follows
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken("958769471097-bbhberld8p4q4mabt3l2oltrs5lsm2s6.apps.googleusercontent.com")
-            .requestEmail()
-            .build()
-        mGoogleSignInClient = GoogleSignIn.getClient(requireActivity(), gso)
+    private fun selectedOptionView(textView: TextView, selectedOptionView: Int) {
+        defaultOptionView()
+        selectedOptionPosition = selectedOptionView
+        textView.setTextColor(Color.parseColor("#7A8089"))
+        textView.typeface = Typeface.DEFAULT_BOLD
+        textView.background = getDrawable(
+            requireActivity(),
+            com.example.myfirebaseapplication.R.drawable.bg_selector_text
+        )
 
-       binding.textHome .setOnClickListener {
-            mGoogleSignInClient.signOut().addOnCompleteListener {
-                val intent = Intent(activity, LogInActivity::class.java)
-                Toast.makeText(activity, "Logging Out", Toast.LENGTH_SHORT).show()
-                startActivity(intent)
-               requireActivity(). finish()
+
+    }
+
+    private fun answerView(answer: Int, image: Int) {
+        when (answer) {
+            1 -> {
+                binding.tvOption.background = ContextCompat.getDrawable(requireActivity(), image)
+            }
+            2 -> {
+                binding.tvOption2.background = ContextCompat.getDrawable(requireActivity(), image)
+            }
+            3 -> {
+                binding.tvOption3.background = ContextCompat.getDrawable(requireActivity(), image)
+            }
+            4 -> {
+                binding.tvOption4.background = ContextCompat.getDrawable(requireActivity(), image)
             }
         }
-        return root
+
     }
 
     override fun onDestroyView() {
@@ -72,5 +138,65 @@ class HomeFragment : Fragment() {
         _binding = null
     }
 
+    override fun onClick(p0: View?) {
+        when (p0!!.id) {
+            com.example.myfirebaseapplication.R.id.tvOption -> {
+                selectedOptionView(binding.tvOption, 1)
+            }
+            com.example.myfirebaseapplication.R.id.tvOption2 -> {
+                selectedOptionView(binding.tvOption2, 2)
+            }
+            com.example.myfirebaseapplication.R.id.tvOption3 -> {
+                selectedOptionView(binding.tvOption3, 3)
+            }
+            com.example.myfirebaseapplication.R.id.tvOption4 -> {
+                selectedOptionView(binding.tvOption4, 4)
+            }
+            com.example.myfirebaseapplication.R.id.textHome -> {
+                if (selectedOptionPosition == 0) {
+                    currentPosition++
 
+                    when {
+                        currentPosition <= questionList!!.size -> {
+                            setQuestionList()
+
+                        }
+                        else -> {
+                            val bundle=Bundle()
+                            bundle.putString(Constant.USER_NAME,(activity as MainActivity).userName)
+                            bundle.putString(Constant.TOTAL_QUESTION,questionList!!.size.toString())
+                            bundle.putString(Constant.CORRECT_ANSWER,mCorrectCount.toString())
+                            Navigation.findNavController(binding.root).navigate(com.example.myfirebaseapplication.R.id.nav_home_to_result,bundle)
+
+                           // (activity as MainActivity).showToast("You have successfully completed quiz")
+                        }
+
+
+                    }
+                } else {
+                    val question = questionList!!.get(currentPosition - 1)
+                    if (question.correctAnswer != selectedOptionPosition) {
+                        answerView(
+                           selectedOptionPosition,
+                            com.example.myfirebaseapplication.R.drawable.wrong_bg
+                        )
+                    }else{
+                        mCorrectCount++
+                    }
+                    answerView(
+                        question.correctAnswer,
+                        com.example.myfirebaseapplication.R.drawable.correct_answer_bg
+                    )
+                    if (currentPosition==questionList!!.size){
+                        binding.textHome.text="FINISH"
+
+                    }else{
+                        binding.textHome.text="GO TO NEXT PAGE"
+                    }
+                    selectedOptionPosition=0
+                }
+
+            }
+        }
+    }
 }
