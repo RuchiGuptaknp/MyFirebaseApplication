@@ -182,7 +182,97 @@ object Constant {
             "Horizontal","Vertical","There is no default value of orientation attribute in LinearLayout","None",1)
         questionList.add(question35)
 
-             questionList.add(question30)
+        val question36=Questions(36,"What views the hierarchies to control the format of the screen?",
+            "Fragments","Views","Layouts","  Intents",3)
+        questionList.add(question36)
+
+        val question37=Questions(37," What does ADB facilitate?",
+            "Installing Apps","Debugging Apps","a & b"," None",3)
+        questionList.add(question37)
+
+        val question38=Questions(38," What wires the components?",
+            "Fragments","Views","Layouts","  Intents",4)
+        questionList.add(question38)
+
+        val question39=Questions(39,"What is the purpose of an AVDs manager in Android?",
+            " Create AVDs"," Manage AVDs"," Delete AVDs"," a & b",4)
+        questionList.add(question39)
+
+        val question40=Questions(40,"What is stored in AVD?",
+            " Device User Data"," Installed Apps & Settings"," Emulated SD Card","All Mentioned Above",4)
+        questionList.add(question40)
+
+
+
+
+
+
+
+
+
+
+
+        val question41=Questions(41,
+            "  Beta version of Android was first developed by?","Opera",
+            "  Google"," HTC", "Microsoft Window",3)
+        questionList.add(question41)
+
+        val question42=Questions(42," What in Android is based upon manipulating directly?",
+            "Home Screen","Status Bar","Interface","App Lists",3)
+        questionList.add(question42)
+
+
+        val question43=Questions(43," Full-size keyboards i.e., physical in Androids can be supported via?","Bluetooth",
+            " USB","  Wi-fi","Either a or b",4)
+        questionList.add(question43)
+
+        val question44=Questions(44,
+            "What is FOSS?","Free and Oriented Space Synchronization",
+            "Fast and Organized Space Software","Free and Open-source Software"," Flexible and Oriented Space software",3)
+        questionList.add(question44)
+
+        val question45=Questions(45,"What is the hub of information in devices of Android?",
+            "App Lists","Home Screen","Status Bar","Interface",2)
+        questionList.add(question45)
+
+        val question46=Questions(46,"Devices of Android boots to ?",
+            "Interface","Status Bar","Home Screen","App Lists",3)
+        questionList.add(question46)
+
+        val question47=Questions(47," What does a home screen in Android consist of?",
+            "App Icons","Widgets","a & b"," None",3)
+        questionList.add(question47)
+
+        val question48=Questions(48,"What Android devices are used in displaying Weather forecasts?",
+            "App Icons","Views","Interface","  Widgets",4)
+        questionList.add(question48)
+
+        val question49=Questions(49,"Why Android developed is Linux based?",
+            " Security"," Networking","Interface","All mentioned above",4)
+        questionList.add(question49)
+
+        val question50=Questions(50," What displays the updated information?",
+            " Home Screen"," Status Bar"," Emulated SD Card","All Mentioned Above",2)
+        questionList.add(question50)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
         return questionList

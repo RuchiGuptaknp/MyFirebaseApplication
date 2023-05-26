@@ -20,7 +20,7 @@
     <string name="btn_login">LogIn</string>
     <string name="already_have_an_account_login">Already Have an Account</string>
     <string name="do_not_have">Do not Have an Account</string>
-    <string name="signuoactivity">SignUoActivity</string>
+    <string name="signuoactivity">SignUpActivity</string>
     <string name="forgot_password">Forgot Password</string>
     <string name="user_name">Name</string>
     <string name="mobile">Mobile</string>

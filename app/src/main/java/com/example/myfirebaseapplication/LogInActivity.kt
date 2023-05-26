@@ -166,7 +166,8 @@ private var progessBar:Dialog?=null
         val currentUser=auth.currentUser
         if (currentUser!=null){
             val intent= Intent(this,MainActivity::class.java)
-            intent.putExtra(Constant.USER_NAME,binding.editText.text.toString())
+            intent.putExtra(Constant.USER_NAME,currentUser)
+            Log.d("name",binding.editText.text.toString())
             startActivity(intent)
         }
     }
